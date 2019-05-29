@@ -184,12 +184,17 @@ def my_shuffle(lst):
     indexes = __shuffle_int(size)
     return [lst[i] for i in indexes]
 
+def combine_transpose(a, b):
+    print(a, b)
+    return np.array([X, Y]).T
+
+def transpose(a):
+    return np.array(a).T
     
 def shuffle_XY():
-    combined = {'X' : X, 'Y' : Y}
-    shuffled = my_shuffle(combined)
-    X[:], Y[:] = zip(*shuffled)
-    return X, Y
+    combined = combine_transpose(X, np.asmatrix(Y).T)
+    shuffled = transpose(my_shuffle(combined))
+    return tuple(shuffled)
 
 def q_from_size(size):
     return ceil(l/size)
@@ -201,7 +206,7 @@ start_test_env(10)
 testify_fake(5)
 n = 10
 testify("__shuffle_int", n, __shuffle_int(n))
-X= my_shuffle(X)
+X, Y= shuffle_XY()
 print(X)
 testify("__shuffle_int", n, X)
 
